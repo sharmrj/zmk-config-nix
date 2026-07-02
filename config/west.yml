@@ -1,0 +1,20 @@
+manifest:
+  remotes:
+    - name: zmkfirmware
+      url-base: https://github.com/zmkfirmware
+    # Vertical OLED widgets (nice_oled shield): WPM bongo cat, Luna,
+    # modifier indicators, animated peripheral cat, smart battery, etc.
+    - name: mctechnology17
+      url-base: https://github.com/mctechnology17
+  projects:
+    - name: zmk
+      remote: zmkfirmware
+      revision: v0.3
+      import: app/west.yml
+    # Fetched by `west update` (locally and in GitHub Actions), so the
+    # nice_oled shield is available to the CI build with nothing committed.
+    - name: zmk-nice-oled
+      remote: mctechnology17
+      revision: v0.0.2
+  self:
+    path: config

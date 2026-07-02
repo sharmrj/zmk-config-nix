@@ -32,9 +32,14 @@ let
     psutil
     anytree
     intelhex
+    unidiff
     setuptools
     wheel
     pip
+
+    # Required for ZMK Studio builds (nanopb / protobuf code generation)
+    protobuf
+    grpcio-tools
   ]);
 in
 pkgs.mkShell {
@@ -65,6 +70,14 @@ pkgs.mkShell {
   # Point Zephyr at the Nix-provided ARM toolchain instead of the Zephyr SDK.
   ZEPHYR_TOOLCHAIN_VARIANT = "gnuarmemb";
   GNUARMEMB_TOOLCHAIN_PATH = "${pkgs.gcc-arm-embedded}";
+
+  # During a ZMK Studio build, `west` prepends its *base* Python interpreter
+  # (plain pkgs.python3, without our extra packages) to PATH. The nanopb
+  # `protoc` script then runs under that bare interpreter via `#!/usr/bin/env
+  # python3` and fails to import `pkg_resources`/`protobuf`/`grpcio-tools`.
+  # Exposing the withPackages site-packages via PYTHONPATH lets that bare
+  # (ABI-compatible) interpreter import them.
+  PYTHONPATH = "${pythonEnv}/${pythonEnv.sitePackages}";
 
   shellHook = ''
     echo "ZMK development shell"
