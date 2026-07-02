@@ -1,0 +1,21 @@
+include:
+  # Left half — central side.
+  # nice_oled draws the central widgets (layer, WPM bongo cat, modifiers,
+  # HID/caps indicators, battery, output) on the 128x32 OLED.
+  #
+  # ZMK Studio is disabled for now (frees RAM for the OLED widgets). To
+  # re-enable it, uncomment the `snippet` and `cmake-args` lines below AND the
+  # ZMK Studio block in config/corne.conf.
+  - board: nice_nano_v2
+    shield: corne_left nice_oled
+    # snippet: studio-rpc-usb-uart
+    # cmake-args: -DCONFIG_ZMK_STUDIO=y
+  # Right half — peripheral side.
+  # nice_oled draws the animated cat + smart battery on the peripheral OLED.
+  # The shield ships from the zmk-nice-oled module (see config/west.yml), which
+  # `west update` fetches during the Actions build — no module files committed.
+  - board: nice_nano_v2
+    shield: corne_right nice_oled
+  # Settings reset — flash to either half to clear stored BT bonds when re-pairing
+  - board: nice_nano_v2
+    shield: settings_reset
