@@ -11,10 +11,9 @@ manifest:
       remote: zmkfirmware
       revision: v0.3
       import: app/west.yml
-    # Fetched by `west update` (locally and in GitHub Actions), so the
-    # nice_oled shield is available to the CI build with nothing committed.
+    # Fetched by `west update` (locally and in GitHub Actions)
     - name: zmk-nice-oled
       remote: mctechnology17
-      revision: v0.0.2
+      revision: 46f824abb2bd41f1287c5c68abd14122af6042a3
   self:
     path: config
